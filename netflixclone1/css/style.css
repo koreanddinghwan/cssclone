@@ -1,0 +1,463 @@
+
+
+/* :root는 css파일 내에 전역변수를 설정하는 것과 같다. 
+즉 html전체 요소에 대한 변수를 설정하는 것이다. 
+밑의 예시로 보면 style property에 
+{
+    background-color: var(--promary-color);
+}처럼 사용이 가능하다.   */
+:root {
+    --primary-color: #e50914;
+    --dark-color: #141414;
+}
+
+
+
+/* 기본값 */
+* {
+    /* box-sizing은 부모요소의 범위를 침범하지 않게한다. */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background: #000;
+    color: #999;
+
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4 {
+    color: white;
+}
+
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+p { 
+    /* 1rem : 16px */
+    margin: 0.5rem 0;
+
+}
+
+
+img {
+    width: 100%;
+}
+
+.showcase {
+    width: 100%;
+
+    /* header의 높이는 viewport의 93정도, 나머지 7에는 버튼이 달려야합니다람쥐*/
+    /* viewport는 화면을 100칸으로 잘라서 그중에 몇 칸을 할당하는 것인가에 대한 것.  */
+    height: 93vh;
+    position: relative;
+
+    /* ../은 현재 폴더의 상위요소로 이동 */
+    /* center/cover는 이미지가 전체에 꽉 채워지게 만들어준다.  */
+    background: url('../img/background.jpg') no-repeat center center/cover;
+
+}
+
+/* 배경이미지 오버레이 */
+.showcase::after {
+    content: '';
+    /* showcase전체에 오버레이 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* z값, 즉 무엇이 화면의 앞에 오는가에 대한 문제이다.  */
+    z-index: 1;
+    background: rgba(0,0,0, 0.6);
+
+    /* 1왼쪽, 2상단의 그림자효과 크기, 3흐림정도, 4색  */ /*1오른쪽(음수값은 오른쪽부터시작) 2.하단(음수값은 아래부터시작) 3흐림정도 4색  */
+    box-shadow: inset 120px 200px 250px #000, inset -120px -200px 250px #000;
+
+}
+
+.showcase-top{
+    /* relative로 90px만큼 높이지정, img를 absoulute로 줄 것이기 때문임. */
+    position: relative;
+    height: 90px;
+
+    /* 오버레이보다 위에 표시되도록 z값 높이기. */
+    z-index: 2;
+}
+
+.showcase-top img {
+    width: 170px;
+    position: absolute;
+    /* absolute로 주어지면 이미지의 왼쪽상단을 기준으로 top은 상위요소인 top의 50%인 45, left도 상위요소의 width절반값에 위치한다. */
+    top: 50%;
+    left: 50%;
+
+    /* 따라서 이미지의 높이와 넓이의 절반값만큼씩 이동시켜줘야한다.  */
+    transform: translate(-50%, -50%); 
+}
+
+.showcase-content {
+    position: relative;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 9rem;
+    z-index: 2;
+}
+
+.showcase-content h1 {
+    font-size: 5.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0 0 2rem;
+    margin: 0 0 2rem;
+}
+
+.showcase-content p {
+    text-transform: uppercase;
+    color: white;
+    font-weight: 400;
+    font-size: 1.9rem;
+    line-height: 1.25;
+}
+
+.showcase-top a {
+    position: absolute;
+    top: 50%;
+    right: 0;
+
+    transform: translate(-50%, -50%);
+}
+
+
+/* container */
+.container {
+    /* 상위요소 tabs의 70%크기로 할당 */
+    max-width: 70%;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 2rem;
+}
+
+/* text styles */
+.text-xl {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.text-md {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+.text-lg {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-dark {
+    color: #999;
+}
+
+/* tabs */
+
+.tabs .container > div {
+    padding: 1.5rem 0;
+}
+
+.tabs .container > div:hover {
+    color: white;
+    cursor: pointer;
+}
+
+.tabs {
+    background: var(--dark-color);
+    padding-top: 1rem;
+    border-bottom: 3px solid #3d3d3d;
+
+}
+
+.tabs p {
+    font-size: 1.2rem;
+    padding-top: 3px solid #3d3d3d;
+}
+
+/* container gird 배열 */
+.tabs .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tab-border {
+    border-bottom: var(--primary-color) 4px solid;
+}
+
+/* tab content */
+.tab-content {
+    padding: 3rem 0;
+    background: black;
+    color: #fff;
+
+}
+
+/*처음에 콘텐트를 안보이게 하게(js)*/
+#tab-1-content,
+#tab-2-content,
+#tab-3-content {
+    display: none;
+}
+
+.show {
+    /* !important는 밑에서 설정한 값이 있더라도 값을 유지하게해준다. */
+    display: block !important;
+}
+
+#tab-1-content .tab-1-content-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#tab-2-content .tab-2-content-top {
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    grid-gap: 1rem;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#tab-2-content .tab-2-content-bottom {
+    margin-top: 2rem;
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    grid-gap: 2rem;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+#tab-3-content .text-center {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+/* table */
+
+.table {
+    width: 100%;
+    margin-top: 2rem;
+
+    border-collapse: collapse; /*경계 간 선 없애기*/
+    border-spacing: 0;
+}
+
+.table thead th {
+    text-transform: uppercase;
+    padding:0.8rem;
+}
+
+.table tbody tr td {
+    color: #999;
+    padding: 0.8rem 1.2rem;
+    text-align: center;
+}
+
+.table tbody tr td:first-child {
+    text-align: left;
+}
+
+.table tbody tr:nth-child(odd) {
+    background: #222;
+}
+
+
+/* footer */
+
+.footer {
+    max-width: 75%;
+    margin: 1rem auto;
+    overflow: auto;
+}
+
+.footer, .footer a {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.p {
+    margin-bottom: 1.5rem;
+}
+
+
+
+.footer .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+}
+
+.footer li {
+    line-height: 1.9;
+}
+
+
+
+
+
+/* button */
+
+.btn {
+    display: inline-block;
+    /* :root에서 정의한 색으로 정의 */
+    background: var(--primary-color);
+    color: #fff;
+    padding: 0.4rem 1.3rem;
+    text-align: center;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    outline: none;
+    box-shadow: 0 1px 0 rgba(0,0,0, 0.45);
+    border-radius: 2px;
+
+}
+
+
+.btn:hover {   
+    opacity: 0.9;
+}
+
+.btn-rounded {
+    border-radius: 5px;
+}
+
+.btn-xl {
+    font-size: 2rem;
+    padding:1.5rem 2.1rem;
+    text-transform: uppercase;
+}
+
+
+.btn-lg {
+    font-size: 1rem;
+    padding: 0.8rem 1.3rem;
+    text-transform: uppercase;
+}
+
+
+@media (max-width: 960px) {
+    .showcase {
+        height: 70vh;
+    }
+
+    .hide-sm {
+        display: none;
+    }
+
+    /* 로고를 왼쪽으로 붙이기. */
+    .showcase-top img {
+        top: 30%;
+        left: 5%;
+        transform: translate(0);
+    }
+
+
+    .showcase-content h1 {
+        font-size: 3.7rem;
+        line-height: 1;
+    }
+
+    .showcase-content p {
+        font-size: 1.5rem;
+
+    }
+
+    .btn-xl {
+        font-size: 1.5rem;
+        padding: 1.4rem 2rem;
+        
+    }
+
+
+    .text-xl {
+        font-size: 1.5rem;
+    }
+
+
+    .text-lg {
+        font-size: 1.3rem;
+
+    }
+    .text-md {
+        font-size: 1rem;
+    }
+
+    .footer .footer-cols {
+        grid-template-columns: repeat(2. 1fr);
+    }
+
+
+}
+
+
+
+@media (max-width:700px) {
+    #tab-content-1 .tab-content-1-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    #tab-content-2 .tab-2-content-top {
+        display: block;
+        text-align: center;
+
+    }
+
+    #tab-content-2 .tab-2-content-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .showcase::after {
+        background: rgba(0,0,0, 0.6);
+        box-shadow: inset 80px 80px 250px #000, inset -80px -80px 250px #000;
+    }
+}
+
+
+
+
+
